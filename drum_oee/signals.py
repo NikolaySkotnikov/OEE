@@ -12,7 +12,7 @@ def check_production_status(sender, instance, **kwargs):
 
 def check_quantity(instance):
     initial_quantity = instance.quantity
-    time.sleep(30)
+    time.sleep(50)
     
     latest_record = Downtime.objects.last()
     if latest_record.status_id != 2:

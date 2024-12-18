@@ -158,8 +158,8 @@ main {
 
 .status-non-production-time { background-color: #855702; } 
 .status-work { background-color: #28a745; top: 240px; } 
-.status-changeover { background-color: #ffc107; top: 160px; }     
-.status-breaking, .status-unassigned-downtime, .status-consistent-simple { background-color: #850202; top: 80px;}     
+.status-changeover, .status-consistent-simple { background-color: #ffc107; top: 160px; }     
+.status-breaking, .status-unassigned-downtime { background-color: #850202; top: 80px;}     
 
 .time-axis {
     width: 100%;

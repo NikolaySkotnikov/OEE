@@ -72,6 +72,11 @@ function updateCircularCycle(value, drumType) {
 
 function calculationOEE(data, quantity) {
     let totalDowntime = 0;
+
+    let lastRecord = data[data.length - 1];
+    if (lastRecord.status === 'В работе' && new Date(lastRecord.end_time) < new Date()) {
+        lastRecord.end_time = new Date();
+    }
     
     data.forEach(record => {
         if (record.status === 'Согласованный простой') {
@@ -116,6 +121,57 @@ function calculationCycleTime(data) {
 let currentOEEValue = 0;
 let currentCycleTime = 0;
 
+let lastQuantity = 0;
+let lastUpdateTime = Date.now();
+let blinkInterval = null;
+
+function stopBlinking() {
+    if (blinkInterval) {
+        clearInterval(blinkInterval);
+        blinkInterval = null;
+        document.body.style.backgroundColor = '';
+        console.log('Мигание остановлено');
+    }
+}
+
+function checkProductionStatus(quantity, status) {
+    const currentTime = Date.now();
+    console.log('Текущий статус:', status);
+
+    const stopBlinkingStatuses = [
+        'Непроизводственное время',
+        'Не присвоенный простой',
+        'Согласованный простой',
+        'Переналадка',
+        'Поломка'
+    ];
+
+    if (stopBlinkingStatuses.includes(status)) {
+        console.log(`Обнаружен статус "${status}" - останавливаем мигание`);
+        stopBlinking();
+        lastUpdateTime = currentTime;
+        lastQuantity = quantity;
+        return;
+    }
+
+    if (quantity === lastQuantity && quantity > 0 && status === 'В работе') {
+        if (currentTime - lastUpdateTime >= 30000) {
+            if (!blinkInterval) {
+                blinkInterval = setInterval(() => {
+                    document.body.style.backgroundColor = 
+                        document.body.style.backgroundColor === 'rgba(255, 0, 0, 0.3)' ? '' : 'rgba(255, 0, 0, 0.3)';
+                }, 1000);
+            }
+        }
+    } else {
+        stopBlinking();
+        lastUpdateTime = currentTime;
+    }
+    
+    lastQuantity = quantity;
+}
+
+
 function updateDashboardData() {
     fetch('/api/parametrs-order/')
         .then(response => response.json())
@@ -136,9 +192,11 @@ function updateDashboardData() {
                 animateValue(currentCycleTime, newCycleTime, 1000, (value) => updateCircularCycle(value, latestData.drum_type))
                 currentOEEValue = newOEEValue;
                 currentCycleTime = newCycleTime;
+                checkProductionStatus(totalQuantity, latestData.status);
             }
 
             else {
+                stopBlinking()
                 document.getElementById('currentOrderNumber').textContent = '-';
                 document.getElementById('currentDrumCount').textContent = 0;
                 document.getElementById('currentDrumType').textContent = '-';

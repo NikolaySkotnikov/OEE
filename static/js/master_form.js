@@ -196,7 +196,9 @@ function oee(data, typeDrum) {
     // Время производства плановое
     let productionTime = 0;
     data.forEach(record => {
-        if (record.drum_type === typeDrum && (record.status !== 'Непроизводственное время' || record.status !== 'Согласованный простой')) {
+        if (record.drum_type === typeDrum && 
+            record.status !== 'Непроизводственное время' && 
+            record.status !== 'Согласованный простой') {
             const duration = (new Date(record.end_time) - new Date(record.start_time)) / (1000 * 60);
             productionTime += duration
         }
