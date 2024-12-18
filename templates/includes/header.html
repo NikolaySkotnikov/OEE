@@ -1,0 +1,28 @@
+{% load static %}
+<header class="navbar navbar-expand-lg">
+    <div class="container">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" height="50" class="me-3">
+        <span class="navbar-text">
+            {% if user.groups.first.name == 'master' %}
+                    Информационная панель
+                {% else %}
+                    Панель оператора
+                {% endif %}
+        </span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if user.groups.first.name == 'master' %}
+                    <li class="nav-item">
+                        <span class="nav-link">{{ user.username }}</span>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Информационная панель{% endblock %}
+
+{% block header %}
+    {% include 'includes/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-md-2 bg-light h-100 py-3">
+            <form method="GET" class="filter-form">
+                <div class="mb-3">
+                    <label class="form-label">Быстрый выбор периода</label>
+                    <select class="form-select" name="quick_period">
+                        <option value="">Выберите период</option>
+                        <option value="today">Сегодня</option>
+                        <option value="yesterday">Вчера</option>
+                    </select>
+                </div>
+                
+                <div class="custom-period mb-3">
+                    <label class="form-label">Начало периода</label>
+                    <input type="date" class="form-control mb-2" name="start_date">
+                    <input type="time" class="form-control" name="start_time">
+                </div>
+        
+                <div class="custom-period mb-3">
+                    <label class="form-label">Конец периода</label>
+                    <input type="date" class="form-control mb-2" name="end_date">
+                    <input type="time" class="form-control" name="end_time">
+                </div>
+        
+                <button type="submit" class="btn green-button w-100">Применить</button>
+            </form>
+        </div>
+        <div class="col-md-10 h-100">
+            <div class="row mt-2">
+                <div class="col-3 text-center fs-1">
+                    <div class="card text-bg-light mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Количество бочек</h5>
+                            <p class="card-text total-drums">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 text-center fs-1">
+                    <div class="card text-bg-light mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Количество ОВ</h5>
+                            <p class="card-text open-top-drums">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 text-center fs-1">
+                    <div class="card text-bg-light mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Количество ЗВ</h5>
+                            <p class="card-text closed-top-drums">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 text-center fs-1">
+                    <div class="card text-bg-light mb-3 oee-card">
+                        <div class="card-body">
+                            <h5 class="card-title">ОЕЕ</h5>
+                            <p class="card-text oee-value">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div id="timeline-container" class="timeline-container">
+                        <!-- Здесь будут отображаться блоки времени -->
+                    </div>
+                    <div id="time-axis" class="time-axis">
+                        <!-- Метки времени -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/master_form.js' %}"></script>
+{% endblock %}

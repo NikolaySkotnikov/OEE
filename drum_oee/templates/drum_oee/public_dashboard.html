@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Панель пользователя{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Панель пользователя</h1>
+    <div class="alert alert-info">
+        Добро пожаловать, {{ user.username }}! Вы вошли как обычный пользователь.
+    </div>
+</div>
+{% endblock %}

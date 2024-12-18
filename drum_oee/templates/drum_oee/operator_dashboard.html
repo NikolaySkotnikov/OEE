@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Панель оператора{% endblock %}
+
+{% block header %}
+    {% include 'includes/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="card py-5">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-3">OEE</h4>
+                    <div class="position-relative" style="width: 200px; height: 200px; margin: 0 auto;">
+                        <svg class="position-absolute" width="200" height="200" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="90" fill="none" stroke="#e9ecef" stroke-width="15"/>
+                            <circle cx="100" cy="100" r="90" fill="none" stroke="#28a745" stroke-width="15"
+                                    stroke-dasharray="565.48" stroke-dashoffset="565.48"
+                                    transform="rotate(-90 100 100)"
+                                    class="progress-circle oee-circle"/>
+                        </svg>
+                        <div class="position-absolute top-50 start-50 translate-middle text-center">
+                            <h2 class="mb-0 oee-value">0.0%</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card py-5">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-3">Время цикла</h4>
+                    <div class="position-relative" style="width: 200px; height: 200px; margin: 0 auto;">
+                        <svg class="position-absolute" width="200" height="200" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="90" fill="none" stroke="#e9ecef" stroke-width="15"/>
+                            <circle cx="100" cy="100" r="90" fill="none" stroke="#28a745" stroke-width="15"
+                                    stroke-dasharray="565.48" stroke-dashoffset="84.82"
+                                    transform="rotate(-90 100 100)"
+                                    class="progress-circle cycle-circle"/>
+                        </svg>
+                        <div class="position-absolute top-50 start-50 translate-middle text-center">
+                            <h2 class="mb-0 cycle-value">0.0</h2><small class="text-muted">сек</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-3">Информация о заказе</h4>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="text-center">
+                                <h5>Номер заказа</h5>
+                                <p class="h3" id="currentOrderNumber">-</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-center">
+                                <h5>Количество бочек</h5>
+                                <p class="h3" id="currentDrumCount">0</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-center">
+                                <h5>Тип бочки</h5>
+                                <p class="h3" id="currentDrumType">-</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-center">
+                                <h5>Статус</h5>
+                                <span class="h3" id="orderStatus">-</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button class="btn btn-success btn-lg px-5 py-3 fs-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                Присвоить
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+    <div class="offcanvas-header">
+        <h3 class="mb-0">Установка параметров заказа</h3>
+    </div>
+    <div class="offcanvas-body">
+        <form id="orderForm">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="orderNumber" class="form-label fs-4">Номер заказа</label>
+                <input type="text" class="form-control" id="orderNumber" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="drumType" class="form-label fs-4">Тип бочки</label>
+                <select class="form-select" id="drumType">
+                    <option value="">Выберите тип бочки</option>
+                    <option value="closed">Закрытый верх</option>
+                    <option value="open">Открытый верх</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="changeover" class="form-label fs-4">Переналадка</label>
+                <select class="form-select" id="changeover">
+                    <option value="">Выберите переналадку</option>
+                    {% for change in changeover %}
+                        <option value="{{ change.id }}">{{ change.description }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="consistent" class="form-label fs-4">Согласованный простой</label>
+                <select class="form-select" id="consistent">
+                    <option value="">Выберите простой</option>
+                    {% for item in consistent %}
+                        <option value="{{ item.id }}">{{ item.description }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="breaking" class="form-label fs-4">Поломка</label>
+                <select class="form-select" id="breaking">
+                    <option value="">Выберите поломку</option>
+                    {% for item in breaking %}
+                        <option value="{{ item.id }}">{{ item.description }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="nonproduction" class="form-label fs-4">Непроизводственное время</label>
+                <select class="form-select" id="nonproduction">
+                    <option value="">Выберите непроизводственное время</option>
+                    {% for item in nonproduction %}
+                        <option value="{{ item.id }}">{{ item.description }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success fs-4">Установить параметры</button>
+                <button type="button" class="btn btn-secondary flex-grow-1 fs-4" data-bs-dismiss="offcanvas">Закрыть</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="numpadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Введите номер заказа</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="numpadInput" class="form-control mb-3" readonly>
+                <div class="numpad">
+                    <div class="row g-2 mb-2">
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('1')">1</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('2')">2</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('3')">3</button></div>
+                    </div>
+                    <div class="row g-2 mb-2">
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('4')">4</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('5')">5</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('6')">6</button></div>
+                    </div>
+                    <div class="row g-2 mb-2">
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('7')">7</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('8')">8</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('9')">9</button></div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('SFC')">SFC</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-outline-primary w-100" onclick="addNumber('0')">0</button></div>
+                        <div class="col-4"><button class="btn btn-lg btn-danger w-100" onclick="clearInput()">C</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="confirmInput()">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/operator_data.js' %}"></script>
+<script src="{% static 'js/numpad_modal.js' %}"></script>
+<script src="{% static 'js/form.js' %}"></script>
+<script src="{% static 'js/progress.js' %}"></script>
+
+{% endblock %}
