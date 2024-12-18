@@ -2,9 +2,11 @@ services:
   web:
     build: .
     ports:
+      - "443:8000"
       - "80:8000"
     volumes:
       - .:/app
+      - ./ssl:/ssl
     depends_on:
       - db
     environment:
@@ -26,3 +28,4 @@ services:
 
 volumes:
   postgres_data:
+  ssl:
