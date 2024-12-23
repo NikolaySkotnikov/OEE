@@ -8,6 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-RUN chmod +x entrypoint.sh
-
-CMD ["./entrypoint.sh"]
+CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000
