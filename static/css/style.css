@@ -14,8 +14,6 @@ body {
 
 .card-header {
     background-color: var(--primary-color);
-    color: red;
-    font-size: 20px;
 }
 
 .btn-outline-primary {
