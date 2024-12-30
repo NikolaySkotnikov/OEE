@@ -18,6 +18,10 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - SECRET_KEY=${SECRET_KEY}
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn --bind 0.0.0.0:8000 oee.wsgi:application"
 
   nginx:
     image: nginx:latest

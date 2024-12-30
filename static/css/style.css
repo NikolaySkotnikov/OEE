@@ -13,7 +13,8 @@ body {
 }
 
 .card-header {
-    background-color: var(--primary-color) !important;
+    background-color: var(--primary-color);
+    color: black;
 }
 
 .btn-outline-primary {
