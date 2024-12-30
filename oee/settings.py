@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'oee-stat.ru', 'www.oee-stat.ru']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'oee-stat.ru', 'www.oee-stat.ru', '85.193.81.230']
 
 # Application definition
 
