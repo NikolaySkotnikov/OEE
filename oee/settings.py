@@ -20,10 +20,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['oee-vol.ru', 'www.oee-vol.ru', 'localhost', '176.57.220.144']
 
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
 # Application definition
 
 INSTALLED_APPS = [
