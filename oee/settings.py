@@ -16,9 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['oee-vol.ru', 'www.oee-vol.ru', 'localhost', '176.57.220.144']
+ALLOWED_HOSTS = ['oee-vol.ru', 'www.oee-vol.ru', 'localhost', '176.57.220.144', 'web']
 
 # Application definition
 
