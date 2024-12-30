@@ -3,8 +3,6 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: .
-    volumes:
-      - static_volume:/app/static
     ports:
       - "8000:8000"
     depends_on:
@@ -25,7 +23,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - static_volume:/app/statiс
+      - static_volume:/app/staticfiles
     depends_on:
       - web
 
