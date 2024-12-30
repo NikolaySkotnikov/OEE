@@ -23,7 +23,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1', 
     'oee-statistica.site', 
     'www.oee-statistica.site', 
-    '85.193.81.230'
+    '176.57.220.144'
 ]
 
 
