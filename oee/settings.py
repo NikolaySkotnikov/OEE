@@ -16,14 +16,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost', 
-    '127.0.0.1', 
-    'oee-statistica.site', 
-    'www.oee-statistica.site', 
-    '176.57.220.144'
+    '*'
 ]
 
 
