@@ -18,7 +18,16 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['oee-vol.ru', 'www.oee-vol.ru', 'localhost', '176.57.220.144', 'web']
+ALLOWED_HOSTS = ['oee-vol.ru', 'web', 'localhost', '127.0.0.1']
+
+# CSRF и безопасность
+CSRF_TRUSTED_ORIGINS = ['https://oee-vol.ru']
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # Application definition
 
