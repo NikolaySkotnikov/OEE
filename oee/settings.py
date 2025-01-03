@@ -18,15 +18,25 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['oee-statistica.site', 'localhost', '127.0.0.1', '77.232.137.210']
+ALLOWED_HOSTS = [
+    'oee-statistica.site',
+    'www.oee-statistica.site',
+    'localhost',
+    '127.0.0.1',
+    '77.232.137.210'
+]
 
 # CSRF и безопасность
-CSRF_TRUSTED_ORIGINS = ['https://oee-statistica.site',
-                        'http://oee-statistica.site',
-                        'http://localhost',
-                        'http://127.0.0.1',
-                        'http://77.232.137.210',
-                        'https://77.232.137.210']
+CSRF_TRUSTED_ORIGINS = [
+    'https://oee-statistica.site',
+    'https://www.oee-statistica.site',
+    'http://oee-statistica.site',
+    'http://www.oee-statistica.site',
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://77.232.137.210',
+    'https://77.232.137.210'
+]
 
 # Application definition
 
