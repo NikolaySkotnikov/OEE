@@ -132,3 +132,11 @@ MEDIA_ROOT = '/home/v/OEE/media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "OEE Статистика",
+    "site_header": "Система мониторинга OEE",
+    "site_brand": "OEE Monitor",
+    "welcome_sign": "Добро пожаловать в систему мониторинга OEE",
+    "copyright": "OEE Statistica 2025",
+}
