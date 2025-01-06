@@ -19,23 +19,23 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'oee-statistica.site',
-    'www.oee-statistica.site',
+    'voloee.ru',
+    'www.voloee.ru',
     'localhost',
     '127.0.0.1',
-    '77.232.137.210'
+    '194.87.226.145'
 ]
 
 # CSRF и безопасность
 CSRF_TRUSTED_ORIGINS = [
-    'https://oee-statistica.site',
-    'https://www.oee-statistica.site',
-    'http://oee-statistica.site',
-    'http://www.oee-statistica.site',
+    'https://voloee.ru',
+    'https://www.voloee.ru',
+    'http://voloee.ru',
+    'http://www.voloee.ru',
     'http://localhost',
     'http://127.0.0.1',
-    'http://77.232.137.210',
-    'https://77.232.137.210'
+    'http://194.87.226.145',
+    'https://194.87.226.145'
 ]
 
 # Application definition
@@ -142,11 +142,3 @@ MEDIA_ROOT = '/home/v/OEE/media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-JAZZMIN_SETTINGS = {
-    "site_title": "OEE Статистика",
-    "site_header": "Система мониторинга OEE",
-    "site_brand": "OEE Monitor",
-    "welcome_sign": "Добро пожаловать в систему мониторинга OEE",
-    "copyright": "OEE Statistica 2025",
-}
