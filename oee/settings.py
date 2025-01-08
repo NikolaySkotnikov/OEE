@@ -23,7 +23,8 @@ ALLOWED_HOSTS = [
     'www.voloee.ru',
     'localhost',
     '127.0.0.1',
-    '194.87.226.145'
+    '194.87.226.145',
+    'voloee.twc1.net'
 ]
 
 # CSRF и безопасность
@@ -35,7 +36,9 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
     'http://194.87.226.145',
-    'https://194.87.226.145'
+    'https://194.87.226.145',
+    'http://voloee.twc1.net',
+    'https://voloee.twc1.net'
 ]
 
 # Application definition
