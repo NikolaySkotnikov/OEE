@@ -142,3 +142,11 @@ MEDIA_ROOT = '/home/v/OEE/media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_SSL_REDIRECT = True  # Перенаправление HTTP на HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True  # Использовать защищенные куки для сессий
+CSRF_COOKIE_SECURE = True  # Использовать защищенные куки для CSRF
+SECURE_HSTS_SECONDS = 31536000  # Включаем HSTS на 1 год
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # HSTS для поддоменов
+SECURE_HSTS_PRELOAD = True  # Предварительная загрузка HSTS
