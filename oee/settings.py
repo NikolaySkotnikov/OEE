@@ -19,8 +19,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'voloee.ru',
-    'www.voloee.ru',
     'localhost',
     '127.0.0.1',
     '194.87.226.145',
@@ -29,10 +27,6 @@ ALLOWED_HOSTS = [
 
 # CSRF и безопасность
 CSRF_TRUSTED_ORIGINS = [
-    'https://voloee.ru',
-    'https://www.voloee.ru',
-    'http://voloee.ru',
-    'http://www.voloee.ru',
     'http://localhost',
     'http://127.0.0.1',
     'http://194.87.226.145',
