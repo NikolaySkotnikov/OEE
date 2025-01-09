@@ -4,18 +4,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = [
@@ -25,7 +17,6 @@ ALLOWED_HOSTS = [
     'voloee.twc1.net'
 ]
 
-# CSRF и безопасность
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
@@ -34,8 +25,6 @@ CSRF_TRUSTED_ORIGINS = [
     'http://voloee.twc1.net',
     'https://voloee.twc1.net'
 ]
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,10 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'oee.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -95,9 +80,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -114,10 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
@@ -126,24 +104,17 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/v/OEE/static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/v/OEE/media'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SECURE_SSL_REDIRECT = True  # Перенаправление HTTP на HTTPS
+SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True  # Использовать защищенные куки для сессий
-CSRF_COOKIE_SECURE = True  # Использовать защищенные куки для CSRF
-SECURE_HSTS_SECONDS = 31536000  # Включаем HSTS на 1 год
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # HSTS для поддоменов
-SECURE_HSTS_PRELOAD = True  # Предварительная загрузка HSTS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
