@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+
 
 class CurrentProduction(models.Model):
     current_order = models.CharField(max_length=100, null=True, blank=True)
