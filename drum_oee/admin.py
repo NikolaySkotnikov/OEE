@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Status, Downtime, Cause
+from api.models import CurrentProduction
 
 
 @admin.register(Status)
@@ -19,3 +20,7 @@ class DowntimeAdmin(admin.ModelAdmin):
 @admin.register(Cause)
 class CauseAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
+
+@admin.register(CurrentProduction)
+class CurrentProductionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'current_order', 'current_type']

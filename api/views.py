@@ -199,7 +199,3 @@ class DowntimeFilterView(APIView):
                 
 
         return Response(queryset_response)
-
-
-
-    
