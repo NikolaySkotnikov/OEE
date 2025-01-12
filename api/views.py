@@ -8,16 +8,12 @@ from django.utils.decorators import method_decorator
 from django.db.models import Q
 from datetime import datetime, timedelta
 from django.utils import timezone
-
-
-current_order = None
-current_type = None
+from api.models import CurrentProduction
 
 
 class ParametrsView(APIView):
     def post(self, request):
-        global current_order
-        global current_type
+        current_production = CurrentProduction.objects.get(id=1)
 
         print(request.data)
         order_number = request.data.get('order_number')
@@ -25,16 +21,19 @@ class ParametrsView(APIView):
         status_downtime = request.data.get('status')
 
         if not status_downtime and order_number and drum_type:
-            current_order = order_number
-            current_type = drum_type
+            current_production.current_order = order_number
+            current_production.current_type = drum_type
+            current_production.save()
 
-            print(current_order, current_type)
+            print(current_production.current_order, current_production.current_type)
 
         else:
 
             if Status.objects.get(id=status_downtime).name_id == 1:
-                current_order = None
-                current_type = None
+                current_production.current_order = None
+                current_production.current_type = None
+                current_production.save()
+
                 if not Downtime.objects.last():
                     start = timezone.now()
                 else:
@@ -50,25 +49,26 @@ class ParametrsView(APIView):
             elif Status.objects.get(id=status_downtime).name_id == 3:
 
                 if order_number != '':
-                    current_order = order_number
+                    current_production.current_order = order_number
                 if drum_type != '':
-                    current_type = drum_type
+                    current_production.current_type = drum_type
+                current_production.save()
 
                 status_downtime = Status.objects.get(id=status_downtime)
                 Downtime.objects.create(
-                    order=current_order,
+                    order=current_production.current_order,
                     status=status_downtime,
-                    drum_type=current_type,
+                    drum_type=current_production.current_type,
                     start_time = Downtime.objects.last().end_time
                 )
                 return Response(status=status.HTTP_200_OK)
             
-            elif Status.objects.get(id=status_downtime).name_id == 4 or Status.objects.get(id=status_downtime).name_id == 5:
+            elif Status.objects.get(id=status_downtime).name_id in [4, 5]:
                 status_downtime = Status.objects.get(id=status_downtime)
                 Downtime.objects.create(
-                    order=current_order,
+                    order=current_production.current_order,
                     status=status_downtime,
-                    drum_type=current_type,
+                    drum_type=current_production.current_type,
                     start_time=Downtime.objects.last().end_time,
                 )
                 return Response(status=status.HTTP_200_OK)
@@ -93,19 +93,15 @@ class ParametrsView(APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class DrumCounterView(APIView):
     def post(self, request):
-        global current_order
-        global current_type
-
-        print(f"DrumCounterView - current_order: {current_order}")
-        print(f"DrumCounterView - current_type: {current_type}")
+        current_production = CurrentProduction.objects.get(id=1)
+        current_order = current_production.current_order
+        current_type = current_production.current_type
         
-        current_production = Downtime.objects.filter(order=current_order).last()
+        downtime = Downtime.objects.filter(order=current_order).last()
         
-        if not current_production or Downtime.objects.last().status_id != 2:
+        if not downtime or Downtime.objects.last().status_id != 2:
             work_type = Status.objects.get(id=2)
-            print('Создание заказа')
-            print(current_order)
-            current_production = Downtime.objects.create(
+            downtime = Downtime.objects.create(
                 order=current_order,
                 status=work_type,
                 start_time=timezone.now(),
@@ -113,15 +109,10 @@ class DrumCounterView(APIView):
                 quantity=1,
                 drum_type=current_type,
             )
-            current_production.save()
-            return Response(status=status.HTTP_200_OK)
         else:
-            print(current_production.status_id)
-            print(current_order, current_type)
-            current_production.quantity += 1
-            current_production.end_time = timezone.now()
-            current_production.save()
-            print(current_production.quantity)
+            downtime.quantity += 1
+            downtime.end_time = timezone.now()
+            downtime.save()
         
         return Response(status=status.HTTP_200_OK)
 
