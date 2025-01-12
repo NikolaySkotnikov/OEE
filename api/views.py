@@ -20,7 +20,7 @@ class ParametrsView(APIView):
         drum_type = request.data.get('drum_type')
         status_downtime = request.data.get('status')
 
-        if not status_downtime and order_number and drum_type:
+        if status_downtime == '' and order_number and drum_type:
             current_production.current_order = order_number
             current_production.current_type = drum_type
             current_production.save()
