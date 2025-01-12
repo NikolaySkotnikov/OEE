@@ -47,6 +47,9 @@ jobs:
             echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
             echo "DB_USER=${{ secrets.DB_USER }}" >> .env
 
+            # Выполняем миграции
+            python manage.py migrate --noinput
+
             # Собираем статику
             python manage.py collectstatic --noinput
             
