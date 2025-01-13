@@ -198,7 +198,7 @@ function updateDashboardData() {
             else {
                 stopBlinking()
                 document.getElementById('currentOrderNumber').textContent = '-';
-                document.getElementById('currentDrumCount').textContent = 0;
+                document.getElementById('currentDrumCount').textContent = '-';
                 document.getElementById('currentDrumType').textContent = '-';
                 document.getElementById('orderStatus').textContent = 'Непроизводственное время';
 
