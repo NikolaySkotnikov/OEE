@@ -71,6 +71,12 @@ function updateCircularCycle(value, drumType) {
 }
 
 function calculationOEE(data, typeDrum) {
+    // Проверка на наличие конечного времени у последней записи
+    if (data.length > 0 && !data[data.length - 1].end_time) {
+        data[data.length - 1].end_time = new Date().toISOString();
+    }
+
+
     // Время производства плановое
     let productionTime = 0;
     data.forEach(record => {
