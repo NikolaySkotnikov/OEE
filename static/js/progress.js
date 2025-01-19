@@ -70,35 +70,46 @@ function updateCircularCycle(value, drumType) {
     }
 }
 
-function calculationOEE(data, quantity) {
-    let totalDowntime = 0;
-
-    let lastRecord = data[data.length - 1];
-    if (lastRecord.status === 'В работе' && new Date(lastRecord.end_time) < new Date()) {
-        lastRecord.end_time = new Date();
-    }
-    
+function calculationOEE(data, typeDrum) {
+    // Время производства плановое
+    let productionTime = 0;
     data.forEach(record => {
-        if (record.status === 'Согласованный простой') {
-            let endTime = record.end_time ? new Date(record.end_time) : new Date();
-            let startTime = new Date(record.start_time);
-            let downtimeMinutes = (endTime - startTime) / (1000 * 60);
-            totalDowntime += downtimeMinutes;
+        if (record.drum_type === typeDrum && 
+            record.status !== 'Непроизводственное время' && 
+            record.status !== 'Согласованный простой') {
+            const duration = (new Date(record.end_time) - new Date(record.start_time)) / (1000 * 60);
+            productionTime += duration
         }
-    });
+    })
 
-    let orderEndTime = data[data.length - 1].end_time ? new Date(data[data.length - 1].end_time) : new Date();
-    let orderStartTime = new Date(data[0].start_time);
-    let totalOrderTime = (orderEndTime - orderStartTime) / (1000 * 60);
+    // Время производства фактическое и количество бочек
+    let actualTime = 0;
+    let totalDrum = 0; 
+    data.forEach(record => {
+        if (record.drum_type === typeDrum && record.status === 'В работе') {
+            const duration = (new Date(record.end_time) - new Date(record.start_time)) / (1000 * 60);
+            actualTime += duration;
+            totalDrum += record.quantity;
+        }
+    })
 
-    let effectiveTime = totalOrderTime - totalDowntime;
+    // Расчет коэфициентов OEE
+    const availability = actualTime / productionTime;
+    console.log(availability)
+    let cycleTime = typeDrum === 'Закрытый верх' ? 6.67 : 5.33;
+    console.log(cycleTime)
+    console.log(productionTime, actualTime)
+    console.log(totalDrum)
+    const performance = totalDrum / (cycleTime * actualTime);
 
-    let productionRate = data[0].drum_type === 'Закрытый верх' ? 6.67 : 5.33;
-    let oeeValue = (quantity / (effectiveTime * productionRate)) * 100;
-    if (quantity < 2) {
-        return 0;
+    // Расчет ОЕЕ
+    const oee = availability * performance * 100;
+    console.log(oee)
+    if (totalDrum === 0) {
+        oee = 0
     }
-    return oeeValue;
+
+    return oee;
 }
 
 function calculationCycleTime(data) {
@@ -185,7 +196,7 @@ function updateDashboardData() {
                 document.getElementById('currentDrumType').textContent = latestData.drum_type;
                 document.getElementById('orderStatus').textContent = latestData.status;
 
-                let newOEEValue = calculationOEE(data, totalQuantity)
+                let newOEEValue = calculationOEE(data, latestData.drum_type)
                 let newCycleTime = calculationCycleTime(data)
 
                 animateValue(currentOEEValue, newOEEValue, 1000, updateCircularOEE);
