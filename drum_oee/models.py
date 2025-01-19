@@ -56,6 +56,7 @@ class Downtime(models.Model):
         return {
             'id': self.id,
             'status': self.status.name.name,
+            'description': self.status.description,
             'start_time': self.start_time,
             'end_time': self.end_time,
             'order': self.order,

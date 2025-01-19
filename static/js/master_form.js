@@ -118,8 +118,16 @@ function renderTimeline(data) {
                 break;
         }
         
-        block.title = `Статус: ${record.status}\nНачало: ${startTime.toLocaleTimeString()}\nКонец: ${endTime.toLocaleTimeString()}\nПродолжительность: ${Math.floor((endTime - startTime) / 1000 / 60)} мин ${Math.floor(((endTime - startTime) / 1000) % 60)} сек\nЗаказ: ${record.order || 'Нет'}\nКоличество: ${record.quantity}\nТип бочки: ${record.drum_type || 'Нет'}`;
-
+        block.title = [
+            `Статус: ${record.status}`,
+            `Начало: ${startTime.toLocaleTimeString()}`,
+            `Конец: ${endTime.toLocaleTimeString()}`,
+            `Длит.: ${Math.floor((endTime - startTime) / 1000 / 60)} мин ${Math.floor(((endTime - startTime) / 1000) % 60)} сек`,
+            `Заказ: ${record.order || 'Нет'}`,
+            `Кол-во: ${record.quantity}`,
+            `Тип: ${record.drum_type || 'Нет'}`,
+            ...(['Непроизводственное время', 'Согласованный простой', 'Не присвоенный простой'].includes(record.status) ? [] : [`Причина: ${record.description || 'Не указана'}`])
+        ].join('\n');
         
         container.appendChild(block);
     });
