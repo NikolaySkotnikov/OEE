@@ -12,7 +12,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="card py-5">
                 <div class="card-body">
                     <h4 class="card-title text-center mb-3">OEE</h4>
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="card py-5">
                 <div class="card-body">
                     <h4 class="card-title text-center mb-3">Время цикла</h4>
@@ -53,39 +53,40 @@
     </div>
     <div class="row mt-4">
         <div class="col-12">
-            <div class="card">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <h4 class="card-title text-center mb-3">Информация о заказе</h4>
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="text-center">
-                                <h5>Номер заказа</h5>
-                                <p class="h3" id="currentOrderNumber">-</p>
+                    <h4 class="card-title text-center mb-4">Информация о заказе</h4>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="bg-light p-3 rounded text-center">
+                                <h6 class="text-muted mb-2">Номер заказа</h6>
+                                <p class="h4 mb-0 text-dark" id="currentOrderNumber">-</p>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="text-center">
-                                <h5>Количество бочек</h5>
-                                <p class="h3" id="currentDrumCount">-</p>
+                        <div class="col-6 col-md-3">
+                            <div class="bg-light p-3 rounded text-center">
+                                <h6 class="text-muted mb-2">Количество бочек</h6>
+                                <p class="h4 mb-0 text-dark" id="currentDrumCount">-</p>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="text-center">
-                                <h5>Тип бочки</h5>
-                                <p class="h3" id="currentDrumType">-</p>
+                        <div class="col-6 col-md-3">
+                            <div class="bg-light p-3 rounded text-center">
+                                <h6 class="text-muted mb-2">Тип бочки</h6>
+                                <p class="h4 mb-0 text-dark" id="currentDrumType">-</p>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="text-center">
-                                <h5>Статус</h5>
-                                <span class="h3" id="orderStatus">-</span>
+                        <div class="col-6 col-md-3">
+                            <div class="bg-light p-3 rounded text-center">
+                                <h6 class="text-muted mb-2">Статус</h6>
+                                <p class="h4 mb-0 text-dark" id="orderStatus">-</p>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
     <div class="row mt-4">
         <div class="col-12 text-center">
             <button class="btn btn-success btn-lg px-5 py-3 fs-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
